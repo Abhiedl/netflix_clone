@@ -50,17 +50,20 @@ class Section2 extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(
             color: kWhite,
-            fontSize: 22,
+            fontSize: 23,
             fontWeight: FontWeight.bold,
           ),
         ),
         kHeight,
-        const Text(
-          'We will download a personalized selection of\n movies and shows for you, so there\'s\n always something to watch on your\n device',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.grey,
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 18),
+          child: Text(
+            'We will download a personalized selection of\n movies and shows for you, so there\'s\n always something to watch on your\n device',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.grey,
+            ),
           ),
         ),
         kHeight,
@@ -159,15 +162,21 @@ class _SmartDownloads extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: const [
-        kWidth,
-        Icon(
-          Icons.settings,
-          color: kWhite,
-        ),
-        Text('Smart Downloads'),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 18.0),
+      child: Row(
+        children: const [
+          // kWidth,
+          Icon(
+            Icons.settings,
+            color: kWhite,
+          ),
+          Text(
+            'Smart Downloads',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
     );
   }
 }
