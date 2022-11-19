@@ -16,7 +16,7 @@ class ScreenMainPage extends StatelessWidget {
     const ScreenNewAndHot(),
     const ScreenFastLaughs(),
     const ScreenSearch(),
-    const ScreenDownloads(),
+    ScreenDownloads(),
   ];
   @override
   Widget build(BuildContext context) {

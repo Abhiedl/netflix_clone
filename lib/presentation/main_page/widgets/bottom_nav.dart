@@ -34,7 +34,7 @@ class BottomNavigationWidget extends StatelessWidget {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.emoji_emotions),
-              label: 'Fast Laughs',
+              label: 'FastLaughs',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.search),
