@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:netflix/core/Constants/sized_box.dart';
+import 'package:netflix/core/Constants/constants.dart';
 import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/presentation/widgets/app_bar_widget.dart';
 

@@ -4,7 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/presentation/downloads/widgets/screen_downloads.dart';
 import 'package:netflix/presentation/fast_laughs/screen_fast_laughs.dart';
-import 'package:netflix/presentation/home/home_screen.dart';
+import 'package:netflix/presentation/home/widgets/home_screen.dart';
 import 'package:netflix/presentation/main_page/widgets/bottom_nav.dart';
 import 'package:netflix/presentation/new_and_hot/screen_new_and_hot.dart';
 import 'package:netflix/presentation/search/screen_search.dart';
