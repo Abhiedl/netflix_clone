@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/Constants/constants.dart';
+import '../../../core/constants.dart';
 import '../../widgets/main_title.dart';
 import 'number_card.dart';
 

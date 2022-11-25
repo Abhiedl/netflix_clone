@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/Constants/constants.dart';
+import '../../core/constants.dart';
 import 'main_home_card.dart';
 import 'main_title.dart';
 

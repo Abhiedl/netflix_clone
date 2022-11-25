@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:netflix/core/Constants/constants.dart';
+import 'package:netflix/core/constants.dart';
 import 'package:netflix/presentation/search/widgets/title.dart';
 
 const imageUrl =

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:netflix/core/Constants/constants.dart';
+import 'package:netflix/core/constants.dart';
 
-import '../../../core/colors/colors.dart';
+import '../../../core/colors.dart';
 import 'custom_button_widget.dart';
 
 class BackgroungCard extends StatelessWidget {

@@ -3,8 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:netflix/core/Constants/constants.dart';
-import 'package:netflix/core/colors/colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix/application/downloads/downloads_bloc.dart';
+import 'package:netflix/core/constants.dart';
+import 'package:netflix/core/colors.dart';
+import 'package:netflix/core/strings.dart';
 import 'package:netflix/presentation/widgets/app_bar_widget.dart';
 
 class ScreenDownloads extends StatelessWidget {
@@ -35,70 +38,83 @@ class ScreenDownloads extends StatelessWidget {
 class Section2 extends StatelessWidget {
   Section2({super.key});
 
-  final List imageList = [
-    'https://www.themoviedb.org/t/p/w1280/pHkKbIRoCe7zIFvqan9LFSaQAde.jpg',
-    'https://www.themoviedb.org/t/p/w1280/uJYYizSuA9Y3DCs0qS4qWvHfZg4.jpg',
-    'https://www.themoviedb.org/t/p/w1280/ujr5pztc1oitbe7ViMUOilFaJ7s.jpg',
-  ];
+  // final List imageList = [
+  //   'https://www.themoviedb.org/t/p/w1280/pHkKbIRoCe7zIFvqan9LFSaQAde.jpg',
+  //   'https://www.themoviedb.org/t/p/w1280/uJYYizSuA9Y3DCs0qS4qWvHfZg4.jpg',
+  //   'https://www.themoviedb.org/t/p/w1280/ujr5pztc1oitbe7ViMUOilFaJ7s.jpg',
+  // ];
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<DownloadsBloc>(context)
+          .add(const DownloadsEvent.getDownloadsImages());
+    });
+
     final Size size = MediaQuery.of(context).size;
-    return Column(
-      children: [
-        const Text(
-          'Introducing Downloads for you',
+
+    return Column(children: [
+      const Text(
+        'Introducing Downloads for you',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: kWhite,
+          fontSize: 23,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      kHeight,
+      const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 18),
+        child: Text(
+          'We will download a personalized selection of\n movies and shows for you, so there\'s\n always something to watch on your\n device',
           textAlign: TextAlign.center,
           style: TextStyle(
-            color: kWhite,
-            fontSize: 23,
-            fontWeight: FontWeight.bold,
+            fontSize: 15,
+            color: Colors.grey,
           ),
         ),
-        kHeight,
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 18),
-          child: Text(
-            'We will download a personalized selection of\n movies and shows for you, so there\'s\n always something to watch on your\n device',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 15,
-              color: Colors.grey,
-            ),
-          ),
-        ),
-        kHeight,
-        SizedBox(
-          width: size.width,
-          height: size.width,
-          child: Stack(alignment: Alignment.center, children: [
-            CircleAvatar(
-              backgroundColor: Colors.grey.withOpacity(0.3),
-              radius: size.width * 0.35,
-            ),
-            DownloadsImageWidget(
-              size: Size(size.width * 0.3, size.width * 0.48),
-              imageList: imageList[0],
-              margin: const EdgeInsets.only(left: 170, top: 50),
-              angle: 15,
-              radius: 7,
-            ),
-            DownloadsImageWidget(
-              size: Size(size.width * 0.3, size.width * 0.48),
-              imageList: imageList[1],
-              margin: const EdgeInsets.only(right: 170, top: 50),
-              angle: -15,
-              radius: 7,
-            ),
-            DownloadsImageWidget(
-              size: Size(size.width * 0.37, size.width * 0.56),
-              radius: 7,
-              imageList: imageList[2],
-              margin: const EdgeInsets.only(top: 18),
-            ),
-          ]),
-        ),
-      ],
-    );
+      ),
+      kHeight,
+      BlocBuilder<DownloadsBloc, DownloadsState>(
+        builder: (context, state) {
+          return SizedBox(
+            width: size.width,
+            height: size.width,
+            child: state.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : Stack(alignment: Alignment.center, children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.grey.withOpacity(0.3),
+                      radius: size.width * 0.35,
+                    ),
+                    DownloadsImageWidget(
+                      size: Size(size.width * 0.3, size.width * 0.48),
+                      imageList:
+                          "$imageAppendUrl${state.downloads[1].posterPath}",
+                      margin: const EdgeInsets.only(left: 170, top: 50),
+                      angle: 15,
+                      radius: 7,
+                    ),
+                    DownloadsImageWidget(
+                      size: Size(size.width * 0.3, size.width * 0.48),
+                      imageList:
+                          '$imageAppendUrl${state.downloads[3].posterPath}',
+                      margin: const EdgeInsets.only(right: 170, top: 50),
+                      angle: -15,
+                      radius: 7,
+                    ),
+                    DownloadsImageWidget(
+                      size: Size(size.width * 0.37, size.width * 0.56),
+                      radius: 7,
+                      imageList:
+                          '$imageAppendUrl${state.downloads[2].posterPath}',
+                      margin: const EdgeInsets.only(top: 18),
+                    ),
+                  ]),
+          );
+        },
+      ),
+    ]);
   }
 }
 

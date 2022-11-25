@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/Constants/constants.dart';
-import '../../../core/colors/colors.dart';
+import '../../../core/constants.dart';
+import '../../../core/colors.dart';
 import '../../home/widgets/custom_button_widget.dart';
+import '../../widgets/video_widget.dart';
 
 class ComingSoonWidget extends StatelessWidget {
   const ComingSoonWidget({
@@ -44,33 +45,8 @@ class ComingSoonWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Stack(
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    height: 200,
-                    child: Image.network(
-                      NewAndHotTempImage,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 10,
-                    right: 10,
-                    child: CircleAvatar(
-                      backgroundColor: Colors.black.withOpacity(0.5),
-                      radius: 22,
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.volume_off,
-                          color: kWhite,
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+              const VideoWidget(
+                videoImage: comingSoonTempImage,
               ),
               kHeight20,
               Row(
@@ -119,7 +95,7 @@ class ComingSoonWidget extends StatelessWidget {
                 ),
               ),
               kHeight,
-              Text(
+              const Text(
                 "Passengers on an immigrant ship traveling to the new continent get caught in a mysterious riddle when they find a second vessel adrift on the open sea.",
                 style: TextStyle(color: kGrey),
               )
