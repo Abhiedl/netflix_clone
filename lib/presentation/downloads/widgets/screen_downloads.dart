@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -15,34 +16,31 @@ class ScreenDownloads extends StatelessWidget {
 
   final _widgetList = [
     const _SmartDownloads(),
-    Section2(),
+    const Section2(),
     const Section3(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const PreferredSize(
-            preferredSize: Size.fromHeight(50),
-            child: AppBarWidget(title: "Downloads")),
-        body: ListView.separated(
-            padding: const EdgeInsets.all(10),
-            itemBuilder: (context, index) => _widgetList[index],
-            separatorBuilder: (context, index) => const SizedBox(
-                  height: 25,
-                ),
-            itemCount: _widgetList.length));
+      appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(50),
+          child: AppBarWidget(title: "Downloads")),
+      body: ListView.separated(
+        itemCount: _widgetList.length,
+        padding: const EdgeInsets.all(10),
+        itemBuilder: (context, index) => _widgetList[index],
+        separatorBuilder: (context, index) => const SizedBox(
+          height: 25,
+        ),
+      ),
+    );
   }
 }
 
 class Section2 extends StatelessWidget {
-  Section2({super.key});
+  const Section2({super.key});
 
-  // final List imageList = [
-  //   'https://www.themoviedb.org/t/p/w1280/pHkKbIRoCe7zIFvqan9LFSaQAde.jpg',
-  //   'https://www.themoviedb.org/t/p/w1280/uJYYizSuA9Y3DCs0qS4qWvHfZg4.jpg',
-  //   'https://www.themoviedb.org/t/p/w1280/ujr5pztc1oitbe7ViMUOilFaJ7s.jpg',
-  // ];
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -78,40 +76,39 @@ class Section2 extends StatelessWidget {
       BlocBuilder<DownloadsBloc, DownloadsState>(
         builder: (context, state) {
           return SizedBox(
-            width: size.width,
-            height: size.width,
-            child: state.isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : Stack(alignment: Alignment.center, children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.grey.withOpacity(0.3),
-                      radius: size.width * 0.35,
-                    ),
-                    DownloadsImageWidget(
-                      size: Size(size.width * 0.3, size.width * 0.48),
-                      imageList:
-                          "$imageAppendUrl${state.downloads[1].posterPath}",
-                      margin: const EdgeInsets.only(left: 170, top: 50),
-                      angle: 15,
-                      radius: 7,
-                    ),
-                    DownloadsImageWidget(
-                      size: Size(size.width * 0.3, size.width * 0.48),
-                      imageList:
-                          '$imageAppendUrl${state.downloads[3].posterPath}',
-                      margin: const EdgeInsets.only(right: 170, top: 50),
-                      angle: -15,
-                      radius: 7,
-                    ),
-                    DownloadsImageWidget(
-                      size: Size(size.width * 0.37, size.width * 0.56),
-                      radius: 7,
-                      imageList:
-                          '$imageAppendUrl${state.downloads[2].posterPath}',
-                      margin: const EdgeInsets.only(top: 18),
-                    ),
-                  ]),
-          );
+              width: size.width,
+              height: size.width,
+              child: state.downloads.isEmpty
+                  ? const Center(child: CircularProgressIndicator())
+                  : Stack(alignment: Alignment.center, children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.grey.withOpacity(0.3),
+                        radius: size.width * 0.35,
+                      ),
+                      DownloadsImageWidget(
+                        size: Size(size.width * 0.3, size.width * 0.48),
+                        imageList:
+                            '$imageAppendUrl${state.downloads[0].posterPath}',
+                        margin: const EdgeInsets.only(left: 170, top: 50),
+                        angle: 15,
+                        radius: 7,
+                      ),
+                      DownloadsImageWidget(
+                        size: Size(size.width * 0.3, size.width * 0.48),
+                        imageList:
+                            '$imageAppendUrl${state.downloads[1].posterPath}',
+                        margin: const EdgeInsets.only(right: 170, top: 50),
+                        angle: -15,
+                        radius: 7,
+                      ),
+                      DownloadsImageWidget(
+                        size: Size(size.width * 0.37, size.width * 0.56),
+                        radius: 7,
+                        imageList:
+                            '$imageAppendUrl${state.downloads[2].posterPath}',
+                        margin: const EdgeInsets.only(top: 18),
+                      ),
+                    ]));
         },
       ),
     ]);
