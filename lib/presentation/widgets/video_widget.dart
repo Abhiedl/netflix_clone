@@ -5,9 +5,9 @@ import 'package:netflix/core/colors.dart';
 class VideoWidget extends StatelessWidget {
   const VideoWidget({
     Key? key,
-    required this.videoImage,
+    required this.url,
   }) : super(key: key);
-  final String videoImage;
+  final String url;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class VideoWidget extends StatelessWidget {
           width: double.infinity,
           height: 200,
           child: Image.network(
-            videoImage,
+            url,
             fit: BoxFit.cover,
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:netflix/core/strings.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/colors.dart';
@@ -6,8 +7,21 @@ import '../../home/widgets/custom_button_widget.dart';
 import '../../widgets/video_widget.dart';
 
 class ComingSoonWidget extends StatelessWidget {
+  final String id;
+  final String day;
+  final String month;
+  final String posterPath;
+  final String movieName;
+  final String description;
+
   const ComingSoonWidget({
     Key? key,
+    required this.id,
+    required this.day,
+    required this.month,
+    required this.posterPath,
+    required this.movieName,
+    required this.description,
   }) : super(key: key);
 
   @override
@@ -20,18 +34,18 @@ class ComingSoonWidget extends StatelessWidget {
           height: 450,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
+            children: [
               Text(
-                "FEB",
-                style: TextStyle(
+                month,
+                style: const TextStyle(
                   fontSize: 18,
                   letterSpacing: 1,
                   color: kGrey,
                 ),
               ),
               Text(
-                "11",
-                style: TextStyle(
+                day,
+                style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 5),
@@ -45,20 +59,24 @@ class ComingSoonWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const VideoWidget(
-                videoImage: comingSoonTempImage,
+              VideoWidget(
+                url: '$imageAppendUrl$posterPath',
               ),
               kHeight20,
               Row(
                 children: [
-                  const Text(
-                    "1899",
-                    style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
+                  Expanded(
+                    child: Text(
+                      movieName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 35,
+                        letterSpacing: -1,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                  const Spacer(),
                   Row(
                     children: const [
                       CustomButtonWidget(
@@ -79,25 +97,27 @@ class ComingSoonWidget extends StatelessWidget {
                   )
                 ],
               ),
-              const Text(
-                "Coming on Friday",
-                style: TextStyle(
+              Text(
+                "Coming on $day $month",
+                style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               kHeight20,
-              const Text(
-                "1899",
-                style: TextStyle(
+              Text(
+                movieName,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               kHeight,
-              const Text(
-                "Passengers on an immigrant ship traveling to the new continent get caught in a mysterious riddle when they find a second vessel adrift on the open sea.",
-                style: TextStyle(color: kGrey),
+              Text(
+                description,
+                maxLines: 4,
+                overflow: TextOverflow.clip,
+                style: const TextStyle(color: kGrey),
               )
             ],
           ),

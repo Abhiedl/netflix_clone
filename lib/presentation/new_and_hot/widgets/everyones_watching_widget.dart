@@ -6,8 +6,14 @@ import '../../../core/colors.dart';
 import '../../home/widgets/custom_button_widget.dart';
 
 class EveryonesWatchingWidget extends StatelessWidget {
+  final String posterPath;
+  final String movieName;
+  final String description;
   const EveryonesWatchingWidget({
     Key? key,
+    required this.posterPath,
+    required this.movieName,
+    required this.description,
   }) : super(key: key);
 
   @override
@@ -30,7 +36,7 @@ class EveryonesWatchingWidget extends StatelessWidget {
         ),
         kHeight50,
         const VideoWidget(
-          videoImage: everyonesWatchingTempImage,
+          url: everyonesWatchingTempImage,
         ),
         kHeight,
         Row(
