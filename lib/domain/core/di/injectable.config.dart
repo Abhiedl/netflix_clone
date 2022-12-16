@@ -18,7 +18,7 @@ import 'package:netflix/domain/new_and_hot/new_and_hot_resp/new_and_hot_services
 import 'package:netflix/domain/search/search_service.dart' as _i7;
 import 'package:netflix/infrastructure/downloads/downloads_repository.dart'
     as _i4;
-import 'package:netflix/infrastructure/search/new_and_hot/new_and_hot_impl.dart'
+import 'package:netflix/infrastructure/new_and_hot/new_and_hot_impl.dart'
     as _i6;
 import 'package:netflix/infrastructure/search/search_impl.dart' as _i8;
 

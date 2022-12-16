@@ -10,7 +10,7 @@ class ComingSoonWidget extends StatelessWidget {
   final String id;
   final String day;
   final String month;
-  final String posterPath;
+  final String backdropPath;
   final String movieName;
   final String description;
 
@@ -19,7 +19,7 @@ class ComingSoonWidget extends StatelessWidget {
     required this.id,
     required this.day,
     required this.month,
-    required this.posterPath,
+    required this.backdropPath,
     required this.movieName,
     required this.description,
   }) : super(key: key);
@@ -60,7 +60,7 @@ class ComingSoonWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               VideoWidget(
-                url: '$imageAppendUrl$posterPath',
+                url: '$imageAppendUrl$backdropPath',
               ),
               kHeight20,
               Row(
@@ -116,7 +116,7 @@ class ComingSoonWidget extends StatelessWidget {
               Text(
                 description,
                 maxLines: 4,
-                overflow: TextOverflow.clip,
+                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(color: kGrey),
               )
             ],

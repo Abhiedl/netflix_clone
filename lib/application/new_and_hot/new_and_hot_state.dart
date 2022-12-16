@@ -11,7 +11,7 @@ class NewAndHotState with _$NewAndHotState {
   factory NewAndHotState.initial() => const NewAndHotState(
         comingSoonList: [],
         everyonesWatchingList: [],
-        isLoading: false,
+        isLoading: true,
         hasError: false,
       );
 }

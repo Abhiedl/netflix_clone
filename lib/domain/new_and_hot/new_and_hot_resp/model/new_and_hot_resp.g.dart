@@ -13,8 +13,9 @@ NewAndHotResp _$NewAndHotRespFromJson(Map<String, dynamic> json) =>
           : Dates.fromJson(json['dates'] as Map<String, dynamic>),
       page: json['page'] as int?,
       results: (json['results'] as List<dynamic>?)
-          ?.map((e) => NewAndHotData.fromJson(e as Map<String, dynamic>))
-          .toList(),
+              ?.map((e) => NewAndHotData.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$NewAndHotRespToJson(NewAndHotResp instance) =>
@@ -34,6 +35,7 @@ NewAndHotData _$NewAndHotDataFromJson(Map<String, dynamic> json) =>
       posterPath: json['poster_path'] as String?,
       releaseDate: json['release_date'] as String?,
       title: json['title'] as String?,
+      originalName: json['original_name'] as String?,
     );
 
 Map<String, dynamic> _$NewAndHotDataToJson(NewAndHotData instance) =>
@@ -42,6 +44,7 @@ Map<String, dynamic> _$NewAndHotDataToJson(NewAndHotData instance) =>
       'id': instance.id,
       'original_language': instance.originalLanguage,
       'original_title': instance.originalTitle,
+      'original_name': instance.originalName,
       'overview': instance.overview,
       'poster_path': instance.posterPath,
       'release_date': instance.releaseDate,

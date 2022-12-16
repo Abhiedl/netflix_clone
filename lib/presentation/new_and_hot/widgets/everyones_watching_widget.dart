@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:netflix/core/strings.dart';
 import 'package:netflix/presentation/widgets/video_widget.dart';
 
 import '../../../core/constants.dart';
@@ -6,12 +7,12 @@ import '../../../core/colors.dart';
 import '../../home/widgets/custom_button_widget.dart';
 
 class EveryonesWatchingWidget extends StatelessWidget {
-  final String posterPath;
+  final String backdropPath;
   final String movieName;
   final String description;
   const EveryonesWatchingWidget({
     Key? key,
-    required this.posterPath,
+    required this.backdropPath,
     required this.movieName,
     required this.description,
   }) : super(key: key);
@@ -22,21 +23,23 @@ class EveryonesWatchingWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         kHeight,
-        const Text(
-          "Jurassic World Dominion",
-          style: TextStyle(
+        Text(
+          movieName,
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
         kHeight,
-        const Text(
-          "Four years after the destruction of Isla Nublar, Biosyn operatives attempt to track down Maisie Lockwood, while Dr Ellie Sattler investigates a genetically engineered swarm of giant insects.",
-          style: TextStyle(color: kGrey),
+        Text(
+          description,
+          maxLines: 4,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(color: kGrey),
         ),
         kHeight50,
-        const VideoWidget(
-          url: everyonesWatchingTempImage,
+        VideoWidget(
+          url: '$imageAppendUrl$backdropPath',
         ),
         kHeight,
         Row(

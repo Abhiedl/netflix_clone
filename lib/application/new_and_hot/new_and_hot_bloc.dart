@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:netflix/domain/core/failures/main_failure.dart';
@@ -18,7 +21,7 @@ class NewAndHotBloc extends Bloc<NewAndHotEvent, NewAndHotState> {
 
     on<LoadDataInComingSoon>((event, emit) async {
       //send loading to ui
-      emit(NewAndHotState(
+      emit(const NewAndHotState(
         comingSoonList: [],
         everyonesWatchingList: [],
         isLoading: true,
@@ -53,34 +56,38 @@ class NewAndHotBloc extends Bloc<NewAndHotEvent, NewAndHotState> {
 
     on<LoadDataInEveryonesWatching>((event, emit) async {
       //send loading to ui
-      emit(NewAndHotState(
+      emit(const NewAndHotState(
         comingSoonList: [],
         everyonesWatchingList: [],
         isLoading: true,
         hasError: false,
       ));
 
-//get data from remote
+      //get data from remote
 
       final _result = await _newAndHotService.getNewAndHotTvData();
 
       //data to state
 
-      _result.fold((MainFailure failure) {
-        return const NewAndHotState(
-          comingSoonList: [],
-          everyonesWatchingList: [],
-          isLoading: false,
-          hasError: true,
-        );
-      }, (NewAndHotResp resp) {
-        return const NewAndHotState(
-          comingSoonList: [],
-          everyonesWatchingList: [],
-          isLoading: false,
-          hasError: false,
-        );
-      });
+      final _newState = _result.fold(
+        (MainFailure failure) {
+          return const NewAndHotState(
+            comingSoonList: [],
+            everyonesWatchingList: [],
+            isLoading: false,
+            hasError: true,
+          );
+        },
+        (NewAndHotResp resp) {
+          return NewAndHotState(
+            comingSoonList: state.comingSoonList,
+            everyonesWatchingList: resp.results!,
+            isLoading: false,
+            hasError: false,
+          );
+        },
+      );
+      emit(_newState);
     });
   }
 }

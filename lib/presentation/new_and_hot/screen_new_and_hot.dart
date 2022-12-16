@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -68,25 +70,11 @@ class ScreenNewAndHot extends StatelessWidget {
                 ]),
           ),
         ),
-        body: TabBarView(children: [
-          const ComingSoonList(),
-          _buildEveryonesWatching(),
+        body: const TabBarView(children: [
+          ComingSoonList(),
+          EveryonesWatchingList(),
         ]),
       ),
-    );
-  }
-
-//   Widget _buildComingSoon() {
-//     return ListView.builder(
-//       itemCount: 10,
-//       itemBuilder: (context, index) => const ComingSoonWidget(),
-//     );
-//   }
-
-  Widget _buildEveryonesWatching() {
-    return ListView.builder(
-      itemCount: 10,
-      itemBuilder: (context, index) => const SizedBox(),
     );
   }
 }
@@ -99,56 +87,120 @@ class ComingSoonList extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       BlocProvider.of<NewAndHotBloc>(context).add(const LoadDataInComingSoon());
     });
-    return BlocBuilder<NewAndHotBloc, NewAndHotState>(
-        builder: (context, state) {
-      if (state.isLoading) {
-        return const Center(
-          child: CircularProgressIndicator(
-            strokeWidth: 2,
-          ),
-        );
-      } else if (state.hasError) {
-        return const Center(
-          child: Text('Error while loading coming soon list.'),
-        );
-      } else if (state.comingSoonList.isEmpty) {
-        return const Center(
-          child: Text('Coming soon list empty.'),
-        );
-      } else {
-        return ListView.builder(
-            itemCount: state.comingSoonList.length,
-            itemBuilder: (context, index) {
-              final movie = state.comingSoonList[index];
-              if (movie.id == null) {
-                return const SizedBox();
-              }
-              String month = '';
-              String day = '';
-              try {
-                final _date = DateTime.parse(movie.releaseDate!);
-                final formattedDate = DateFormat.yMMMMd('en_US').format(_date);
-                month = formattedDate
-                    .split(' ')
-                    .first
-                    .substring(0, 3)
-                    .toUpperCase();
-                day = movie.releaseDate!.split('-')[1];
-              } catch (_) {
-                month = '';
-                day = '';
-              }
+    return RefreshIndicator(
+      onRefresh: () async {
+        BlocProvider.of<NewAndHotBloc>(context)
+            .add(const LoadDataInComingSoon());
+      },
+      child:
+          BlocBuilder<NewAndHotBloc, NewAndHotState>(builder: (context, state) {
+        if (state.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+            ),
+          );
+        } else if (state.hasError) {
+          return const Center(
+            child: Text('Error while loading coming soon list.'),
+          );
+        } else if (state.comingSoonList.isEmpty) {
+          return const Center(
+            child: Text('Coming soon list empty.'),
+          );
+        } else {
+          return ListView.builder(
+              padding: EdgeInsets.only(top: 20),
+              itemCount: state.comingSoonList.length,
+              itemBuilder: (context, index) {
+                final movie = state.comingSoonList[index];
+                if (movie.id == null) {
+                  return const SizedBox();
+                }
+                String month = '';
+                String day = '';
+                try {
+                  final _date = DateTime.parse(movie.releaseDate!);
+                  final formattedDate =
+                      DateFormat.yMMMMd('en_US').format(_date);
+                  month = formattedDate
+                      .split(' ')
+                      .first
+                      .substring(0, 3)
+                      .toUpperCase();
+                  day = movie.releaseDate!.split('-')[1];
+                } catch (_) {
+                  month = '';
+                  day = '';
+                }
 
-              return ComingSoonWidget(
-                id: movie.id.toString(),
-                day: day,
-                month: month,
-                posterPath: '$imageAppendUrl${movie.posterPath}',
-                movieName: movie.originalTitle ?? 'No title.',
-                description: movie.overview ?? 'No description.',
-              );
-            });
-      }
+                return ComingSoonWidget(
+                  id: movie.id.toString(),
+                  day: day,
+                  month: month,
+                  backdropPath: '$imageAppendUrl${movie.backdropPath}',
+                  movieName: movie.originalTitle ?? 'No title.',
+                  description: movie.overview ?? 'No description.',
+                );
+              });
+        }
+      }),
+    );
+  }
+}
+
+class EveryonesWatchingList extends StatelessWidget {
+  const EveryonesWatchingList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<NewAndHotBloc>(context)
+          .add(const LoadDataInEveryonesWatching());
     });
+
+    return RefreshIndicator(
+      onRefresh: () async {
+        BlocProvider.of<NewAndHotBloc>(context)
+            .add(const LoadDataInEveryonesWatching());
+      },
+      child: BlocBuilder<NewAndHotBloc, NewAndHotState>(
+        builder: (context, state) {
+          if (state.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+              ),
+            );
+          } else if (state.hasError) {
+            return const Center(
+              child: Text('Error while loading coming soon list.'),
+            );
+          } else if (state.everyonesWatchingList.isEmpty) {
+            return const Center(
+              child: Text("Everyone's watching list emp"),
+            );
+          } else {
+            return ListView.builder(
+                padding: const EdgeInsets.all(15),
+                itemCount: state.everyonesWatchingList.length,
+                itemBuilder: (context, index) {
+                  final movie = state.everyonesWatchingList[index];
+                  log(movie.toString());
+                  if (movie.id == null) {
+                    return const SizedBox();
+                  }
+
+                  final tv = state.everyonesWatchingList[index];
+
+                  return EveryonesWatchingWidget(
+                      backdropPath: '$imageAppendUrl${tv.backdropPath}',
+                      movieName: tv.originalName ?? 'No title available',
+                      description: tv.overview ?? 'No description available');
+                });
+          }
+        },
+      ),
+    );
   }
 }
