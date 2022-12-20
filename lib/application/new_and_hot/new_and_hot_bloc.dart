@@ -81,7 +81,7 @@ class NewAndHotBloc extends Bloc<NewAndHotEvent, NewAndHotState> {
         (NewAndHotResp resp) {
           return NewAndHotState(
             comingSoonList: state.comingSoonList,
-            everyonesWatchingList: resp.results!,
+            everyonesWatchingList: resp.results,
             isLoading: false,
             hasError: false,
           );

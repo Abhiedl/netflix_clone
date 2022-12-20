@@ -7,7 +7,9 @@ import 'number_card.dart';
 class NumberTitleCard extends StatelessWidget {
   const NumberTitleCard({
     Key? key,
+    required this.posterList,
   }) : super(key: key);
+  final List<String> posterList;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class NumberTitleCard extends StatelessWidget {
             children: List.generate(
                 10,
                 (index) => NumberCard(
+                      imageUrl: posterList[index],
                       index: index,
                     )),
           ),

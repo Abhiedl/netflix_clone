@@ -9,8 +9,13 @@ import 'package:netflix/core/colors.dart';
 import '../../../core/constants.dart';
 
 class NumberCard extends StatelessWidget {
-  const NumberCard({super.key, required this.index});
+  const NumberCard({
+    super.key,
+    required this.index,
+    required this.imageUrl,
+  });
   final int index;
+  final String imageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +31,9 @@ class NumberCard extends StatelessWidget {
               height: 200,
               decoration: BoxDecoration(
                 borderRadius: kRadius,
-                image: const DecorationImage(
+                image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: NetworkImage(
-                      "https://www.themoviedb.org/t/p/w440_and_h660_face/62HCnUTziyWcpDaBO2i1DX17ljH.jpg"),
+                  image: NetworkImage(imageUrl),
                 ),
               )),
         ],
